@@ -1,16 +1,20 @@
 import { act, useState } from "react";
 import "./Accordion.css";
 import Panel from "./Panel";
-const Accordion = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
+const Accordion = ({userDetails}) => {
+    console.log(userDetails);
+    const [activeIndex, setActiveIndex] = useState(1);
     const togglePanel = (index) => {
         activeIndex === index ? setActiveIndex(-1) : setActiveIndex(index);
     }
     return (
     <div className="accordion">
-        <h1>Accordion Title</h1>
-        <Panel title = "Title 1" isAccordionActive={activeIndex === 0} onShow = {() => togglePanel(0)}>Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1Body 1</Panel>
-        <Panel title = "Title 2" isAccordionActive={activeIndex === 1} onShow = {() => togglePanel(1)}>Body2</Panel>
+        <h1>User Details</h1>
+        {userDetails && 
+            userDetails?.map((user) => {
+                return <Panel key={user.id} title={user.title} isAccordionActive={activeIndex === user.id} onShow={() => togglePanel(user.id)}>{user.body}</Panel>
+            })
+        }
     </div>
     );
 }
